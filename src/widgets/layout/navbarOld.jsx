@@ -9,9 +9,8 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import NavConfig from "./navconfig";
 
-export function Navbar({ brandName, action }) {
+export function NavbarOld({ brandName, routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -23,7 +22,7 @@ export function Navbar({ brandName, action }) {
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {NavConfig.map(({ name, path, icon, href, target }) => (
+      {routes.map(({ name, path, icon, href, target }) => (
         <Typography
           key={name}
           as="li"
@@ -116,6 +115,7 @@ Navbar.defaultProps = {
 
 Navbar.propTypes = {
   brandName: PropTypes.string,
+  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.node,
 };
 

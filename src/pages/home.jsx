@@ -1,4 +1,5 @@
 import React from "react";
+import {useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -8,13 +9,50 @@ import {
   IconButton,
   Input,
   Textarea,
+  Alert,
 } from "@material-tailwind/react";
-import { UsersIcon } from "@heroicons/react/24/solid";
 import { PageTitle, Footer } from "@/widgets/layout";
-import { FeatureCard, TeamCard } from "@/widgets/cards";
+import { BlogPostCard, FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
 
+import axios from '@/api/axios'
+
 export function Home() {
+  const [posts, setPosts] = useState();
+  const [totalPages, setTotalPages] = useState();
+  const [errMsg, setErrMsg] = useState('');
+  const getAllPostsUrl = "/admin/posts/all"
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+    const getAllPosts = async () => {
+      try {
+        const posts = await axios.get(getAllPostsUrl,{ params: { page: 0, size: 4 }},{
+          signal: controller.signal
+        });
+
+        if(isMounted){
+          setPosts(posts.data.data);
+          setTotalPages(posts.data.totalPages);
+          setErrMsg('')
+        }
+      } catch (error) {
+        if(error.response.status === 400) {
+          setErrMsg(error.response.data.message)
+        }else{
+          setErrMsg("Something Wrong!");
+        }
+      }
+    }
+    getAllPosts()
+    return () => {
+      isMounted = false;
+      controller.abort();
+    }
+  },[])
+
+  console.log(posts);
   return (
     <>
       <div className="relative flex h-screen content-center items-center justify-center pt-16 pb-32">
@@ -55,54 +93,17 @@ export function Home() {
             ))}
           </div>
           <div className="mt-32 flex flex-wrap items-center">
-            <div className="mx-auto -mt-8 w-full px-4 md:w-5/12">
-              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white p-3 text-center shadow-lg">
-                <UsersIcon className="h-6 w-6 text-blue-gray-900" />
-              </div>
-              <Typography
-                variant="h3"
-                className="mb-3 font-bold"
-                color="blue-gray"
-              >
-                Working with us is a pleasure
-              </Typography>
-              <Typography className="mb-8 font-normal text-blue-gray-500">
-                Don't let your uses guess by attaching tooltips and popoves to
-                any element. Just make sure you enable them first via
-                JavaScript.
-                <br />
-                <br />
-                The kit comes with three pre-built pages to help you get started
-                faster. You can change the text and images and you're good to
-                go. Just make sure you enable them first via JavaScript.
-              </Typography>
-              <Button variant="outlined">read more</Button>
-            </div>
-            <div className="mx-auto mt-24 flex w-full justify-center px-4 md:w-4/12 lg:mt-0">
-              <Card className="shadow-lg shadow-gray-500/10">
-                <CardHeader className="relative h-56">
-                  <img
-                    alt="Card Image"
-                    src="/img/teamwork.jpeg"
-                    className="h-full w-full"
+            <div className="mt-24 grid grid-cols-1 gap-12 gap-x-10 md:grid-cols-2 xl:grid-cols-4">
+            {/* <div className="mx-auto mt-24 flex w-full justify-center px-4 md:w-3/12 lg:mt-0"> */}
+              {posts?.map((post, index) => (
+                  <BlogPostCard
+                    key={index}
+                    post={post}
                   />
-                </CardHeader>
-                <CardBody>
-                  <Typography
-                    variant="h5"
-                    color="blue-gray"
-                    className="mb-3 font-bold"
-                  >
-                    Top Notch Services
-                  </Typography>
-                  <Typography className="font-normal text-blue-gray-500">
-                    The Arctic Ocean freezes every winter and much of the
-                    sea-ice then thaws every summer, and that process will
-                    continue whatever happens.
-                  </Typography>
-                </CardBody>
-              </Card>
+                ))
+              }
             </div>
+          
           </div>
         </div>
       </section>
@@ -113,7 +114,31 @@ export function Home() {
             Ted, Scambos, NSIDClead scentist, puts the potentially record
             maximum.
           </PageTitle>
+          {errMsg && 
+            <Alert
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              }
+            >
+              {errMsg}
+            </Alert>
+          }
+          
           <div className="mt-24 grid grid-cols-1 gap-12 gap-x-24 md:grid-cols-2 xl:grid-cols-4">
+
             {teamData.map(({ img, name, position, socials }) => (
               <TeamCard
                 key={name}
