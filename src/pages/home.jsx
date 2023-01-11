@@ -94,7 +94,6 @@ export function Home() {
           </div>
           <div className="mt-32 flex flex-wrap items-center">
             <div className="mt-24 grid grid-cols-1 gap-12 gap-x-10 md:grid-cols-2 xl:grid-cols-4">
-            {/* <div className="mx-auto mt-24 flex w-full justify-center px-4 md:w-3/12 lg:mt-0"> */}
               {posts?.map((post, index) => (
                   <BlogPostCard
                     key={index}
@@ -103,7 +102,6 @@ export function Home() {
                 ))
               }
             </div>
-          
           </div>
         </div>
       </section>
@@ -194,7 +192,7 @@ export function Home() {
           <form className="mx-auto mt-12 max-w-3xl text-center">
             <div className="mb-8 flex gap-8">
               <Input variant="standard" size="lg" label="Full Name" />
-              <Input variant="standard" size="lg" label="Email Address" />
+              {/* <Input variant="standard" size="lg" label="Email Address" /> */}
             </div>
             <Textarea variant="standard" size="lg" label="Message" rows={8} />
             <Button variant="gradient" size="lg" className="mt-8">

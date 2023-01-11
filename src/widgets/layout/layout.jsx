@@ -6,7 +6,7 @@ import Navbar from './navbar';
 export function Layout(){
   return (
     <>
-        <div className="container absolute left-2/4 z-10 mx-auto -translate-x-2/4 p-4">
+        <div className="container px-4 mx-auto flex items-center py-0">
             <Navbar/>
         </div>
         <div>

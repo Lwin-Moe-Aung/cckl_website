@@ -6,32 +6,59 @@ import {
   CardHeader,
 } from "@material-tailwind/react";
 import { fDate } from '@/utils/formatTime';
+import { fShortenNumber } from '@/utils/formatNumber';
+
 import { UsersIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 export function BlogPostCard({ post }) {
-  return (
-    <Card className="shadow-lg shadow-gray-500/10">
-        <CardHeader className="relative h-56">
-            <img
-            alt="Card Image"
-            src={post?.cover_image}
-            className="h-full w-full"
-            />
-        </CardHeader>
-        <CardBody>
-            <Typography
-            variant="h5"
-            color="blue-gray"
-            className="mb-3 font-bold"
-            >
+  const blogDetailUrl = `/blog/watch?b=${post.slug}`;
 
-                {post?.title}
-            </Typography>
-            <Typography className="font-normal text-blue-gray-300">
-                {fDate(post.createdAt)}
-            </Typography>
-        </CardBody>
-    </Card>
+  return (
+    <div className="rounded-sm bg-white p-4 pb-5 shadow-sm">
+      <Link
+        to={blogDetailUrl}
+        className="block rounded-md overflow-hidden"
+      >
+        <img src={post?.cover_image}
+          className="w-full h-60 object-cover transform hover:scale-110 transition duration-500"/>
+      </Link>
+    
+      <div className="mt-3">
+          <div className="mt-2 flex space-x-3 justify-end">
+            <div className="flex text-gray-400 text-sm items-left">
+              <span className="mr-2 text-xs">
+                  <i className="far fa-clock"></i>
+              </span>
+              {fDate(post.createdAt)}
+            </div>
+          </div>
+          <Link
+            to={blogDetailUrl}
+            className="block rounded-md overflow-hidden"
+          >
+            <h2
+              className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
+              {post?.title}
+            </h2>
+          </Link>
+        
+          <div className="flex space-x-3 justify-end">
+            <div className="flex text-gray-800 text-sm items-right">
+              <span className="mr-2 text-xs">
+                  <i className="far fa-eye"></i>
+              </span>
+              {fShortenNumber(post?.view_count)}
+            </div>
+            <div className="flex text-gray-800 text-sm items-right">
+              <span className="mr-2 text-xs">
+                  <i className="far fa-comment"></i>
+              </span>
+              {fShortenNumber(post?.postComment.length)}
+            </div>
+          </div>
+      </div>
+    </div>
   );
 }
 

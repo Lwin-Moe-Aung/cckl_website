@@ -18,6 +18,11 @@ export const NavConfig = [
     path: "/profile",
   },
   {
+    icon: UserCircleIcon,
+    name: "blog",
+    path: "/blog",
+  },
+  {
     icon: ArrowRightOnRectangleIcon,
     name: "Sign In",
     path: "/sign-in",
