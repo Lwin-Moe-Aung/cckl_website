@@ -54,7 +54,7 @@ export function BlogPostCard({ post }) {
               <span className="mr-2 text-xs">
                   <i className="far fa-comment"></i>
               </span>
-              {fShortenNumber(post?.postComment.length)}
+              {fShortenNumber(post?.commentCount)}
             </div>
           </div>
       </div>

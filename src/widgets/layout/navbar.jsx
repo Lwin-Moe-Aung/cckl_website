@@ -80,9 +80,13 @@ export function Navbar({ brandName, action }) {
           <div className="container px-4 mx-auto flex items-center py-3">
               {/* <!-- logo --> */}
               <div className="lg:w-44 w-40">
-                  <a href="index.html">
-                      <img src="src/images/logo.png" alt="logo" className="w-full"/>
-                  </a>
+                  <Link
+                    to="/home"
+                    className="flex items-center font-semibold text-sm  transition hover:text-blue-500"
+                  >
+                    <img src="img/logo.png" alt="logo" className="w-full"/>
+                  </Link>
+                  
               </div>
               {/* <!-- logo end --> */}
 
@@ -117,8 +121,6 @@ export function Navbar({ brandName, action }) {
                   </Link>
               </div>
               {/* <!-- navlinks end --> */}
-
-              {/* <!-- searchbar --> */}
               <div className="relative lg:ml-auto hidden lg:block">
                   <span className="absolute left-3 top-2 text-sm text-gray-500">
                       <i className="fas fa-search"></i>
@@ -127,14 +129,16 @@ export function Navbar({ brandName, action }) {
                       className="block w-full shadow-sm border-none rounded-3xl  pl-11 pr-2 py-2 focus:outline-none bg-gray-50 text-sm text-gray-700 placeholder-gray-500"
                       placeholder="Search"/>
               </div>
-              <div className="lg:ml-5 ml-auto">
-                  <a href="#"
-                      className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center">
-                      <span className="mr-2">
-                          <i className="far fa-user"></i>
-                      </span>
-                      Login/Register</a>
+              <div className="lg:ml-5 ml-auto justify-end">
+                <a href="#"
+                    className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center">
+                    <span className="mr-2">
+                        <i className="far fa-user"></i>
+                    </span>
+                    Login/Register</a>
               </div>
+              {/* <!-- searchbar --> */}
+              
               <div className="text-xl text-gray-700 cursor-pointer ml-4 lg:hidden block hover:text-blue-500 transition"
                   id="open_sidebar" onClick={openSidebar}>
                   <i className="fas fa-bars"></i>

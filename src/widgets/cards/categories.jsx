@@ -1,91 +1,53 @@
-import React from 'react'
+import React,{ useState, useEffect } from "react";
+import axios from "@/api/axios";
+import { Link } from "react-router-dom";
+import slugify from 'react-slugify';
 
 export const Categories = () => {
-  return (
-    <div className="w-full bg-white shadow-sm rounded-sm p-4 ">
+    const [categories, setCategories] = useState(null);
+    const url = "/admin/categories/post-count";
+    const catUrl = "/blog/category?cat=";
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        const getCategories = async () => {
+          try {
+              const categories = await axios.get(url,{
+                  signal: controller.signal
+              });
+              if(isMounted) setCategories(categories.data);
+          } catch (error) {
+             console.log(error);
+          }
+        }
+        getCategories();
+        return () => {
+          isMounted = false;
+          controller.abort();
+        }
+  
+    }, []) 
+    console.log(categories);
+    return (
+        <div className="w-full bg-white shadow-sm rounded-sm p-4 ">
             <h3 className="text-xl font-semibold text-gray-700 mb-3 font-roboto">Categories</h3>
             <div className="space-y-2">
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Beauti</span>
-                    <p className="ml-auto font-normal">(12)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Business</span>
-                    <p className="ml-auto font-normal">(15)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Fashion</span>
-                    <p className="ml-auto font-normal">(5)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Food</span>
-                    <p className="ml-auto font-normal">(10)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Learn</span>
-                    <p className="ml-auto font-normal">(3)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Music</span>
-                    <p className="ml-auto font-normal">(7)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Nature</span>
-                    <p className="ml-auto font-normal">(0)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>People</span>
-                    <p className="ml-auto font-normal">(13)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Sports</span>
-                    <p className="ml-auto font-normal">(7)</p>
-                </a>
-                <a href="#"
-                    className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                    <span className="mr-2">
-                        <i className="far fa-folder-open"></i>
-                    </span>
-                    <span>Technology</span>
-                    <p className="ml-auto font-normal">(17)</p>
-                </a>
+                {categories?.map((category, index) => (
+                    <Link
+                        key={index}
+                        to={`${catUrl}${slugify(category.name)}`}
+                        className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500"
+                    >
+                        <span className="mr-2">
+                            <i className="far fa-folder-open"></i>
+                        </span>
+                        <span>{category.name}</span>
+                        <p className="ml-auto font-normal">({category.postCount})</p>
+                    </Link>
+                ))}
+                
+               
             </div>
         </div>
-  )
+    )
 }
