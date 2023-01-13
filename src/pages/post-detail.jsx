@@ -9,58 +9,69 @@ import {
 } from "@heroicons/react/24/solid";
 import { Footer } from "@/widgets/layout";
 import axios from "@/api/axios";
-import { fDate } from '@/utils/formatTime';
 import { PostView, Comment, SimilerPost, Alert } from "@/widgets/cards";
 
-export function PostDetail() {
+export function PostDetail(){
     const [post, setPost] = useState(null);
+    const [similerPosts, setSimilerPosts] = useState(null);
     const [errMsg, setErrMsg] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
     const slug = searchParams.get('b');
     const url = "/admin/posts";
+    const similerPostsUrl = "/admin/posts/related";
 
     useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
         const getPost = async () => {
-          try {
-              const post = await axios.get(`${url}/${slug}`,{
-                  signal: controller.signal
-              });
-              if(isMounted) setPost(post.data);
-          } catch (error) {
-              if(error.response.status === 400) {
-                  setErrMsg(error.response.data.message)
-              }else{
-                  setErrMsg("Something Wrong!");
-              }
-          }
+            try {
+                const post = await axios.get(`${url}/${slug}`);
+                setPost(post?.data);
+            } catch (error) {
+                if(error.response.status === 400) {
+                    setErrMsg(error.response.data.message)
+                }else{
+                    setErrMsg("Something Wrong!");
+                }
+            }
         }
         getPost();
-        return () => {
-          isMounted = false;
-          controller.abort();
+    }, [slug]);
+
+    useEffect(() => {
+        const getRelatedPosts = async () => {
+          try {
+                let cat = ''
+                post?.categories.map(item => {
+                    cat = cat === '' ? `${item.slug}` : `${cat}&${item.slug}`;
+                });
+                const sPost = await axios.get(
+                    similerPostsUrl,
+                    {params: {cat, limit: 3, selfPostSlug: post?.slug}}
+                    );
+                    // console.log(sPost.data)
+                await setSimilerPosts(sPost?.data);
+            } catch (error) {
+                if(error.response.status === 400) {
+                    setErrMsg(error.response.data.message)
+                }else{
+                    setErrMsg("Something Wrong!");
+                }
+            }
         }
+        getRelatedPosts();
 
-    }, [slug])
-
-    console.log(post);
+    }, [post]);
+  
     return (
         <>
-          <section className="relative block h-[50vh]">
-              <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('/img/background-1.jpg')] bg-cover bg-center" />
-              <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
-          </section>
+         
           {errMsg && 
             <Alert errMsg={errMsg}/>
           }
           <div className="xl:w-6/12 lg:w-9/12 w-full  xl:ml-6 lg:mr-6">
             {/*  post view  */}
-
             {post !== null ? <PostView post={post}/> : null}
            
-
             {/*  title  */}
             <div className="flex bg-white px-3 py-2 justify-between items-center rounded-sm mt-8">
                 <h5 className="text-base uppercase font-semibold font-roboto">Related post</h5>
@@ -71,8 +82,11 @@ export function PostDetail() {
             </div>
 
             {/*  similer post  */}
-            <SimilerPost/>
-
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
+                {similerPosts?.map((similerPost, index) => (
+                    <SimilerPost key={index} similerPost ={similerPost}/>
+                ))}
+            </div>
             {/*  comment  */}
             <Comment/>
           </div>

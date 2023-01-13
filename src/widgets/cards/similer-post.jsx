@@ -1,93 +1,45 @@
 import React from 'react'
+import { fDate } from '@/utils/formatTime';
+import { fShortenNumber } from '@/utils/formatNumber';
+import { Link } from "react-router-dom";
 
-export const SimilerPost = () => {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
-    <div className="rounded-sm bg-white p-3 pb-5 shadow-sm">
-        <a href="#" className="block rounded-md overflow-hidden">
-            <img src="src/images/img-7.jpg"
-                className="w-full h-40 object-cover transform hover:scale-110 transition duration-500"/>
-        </a>
-        <div className="mt-3">
-            <a href="#">
-                <h2
-                    className="block text-base font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor amet sit consec tetur elit.
-                </h2>
-            </a>
-            <div className="mt-2 flex space-x-3">
-                <div className="flex text-gray-400 text-xs items-center">
-                    <span className="mr-1 text-xs">
-                        <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
-                </div>
-                <div className="flex text-gray-400 text-xs items-center">
-                    <span className="mr-1 text-xs">
-                        <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
-                </div>
-            </div>
-        </div>
-    </div>
-    <div className="rounded-sm bg-white p-3 pb-5 shadow-sm">
-        <a href="#" className="block rounded-md overflow-hidden">
-            <img src="src/images/img-5.jpg"
-                className="w-full h-40 object-cover transform hover:scale-110 transition duration-500"/>
-        </a>
-        <div className="mt-3">
-            <a href="#">
-                <h2
-                    className="block text-base font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor amet sit consec tetur elit.
-                </h2>
-            </a>
-            <div className="mt-2 flex space-x-3">
-                <div className="flex text-gray-400 text-xs items-center">
-                    <span className="mr-1 text-xs">
-                        <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
-                </div>
-                <div className="flex text-gray-400 text-xs items-center">
-                    <span className="mr-1 text-xs">
-                        <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
+export const SimilerPost = ({similerPost}) => {
+    const url = "/blog/watch?b=";
+    return (
+        <div className="rounded-sm bg-white p-3 pb-5 shadow-sm">
+            <Link to={`${url}${similerPost?.slug}`} className="block rounded-md overflow-hidden">
+                <img src={similerPost?.cover_image}
+                    className="w-full h-40 object-cover transform hover:scale-110 transition duration-500"/>
+            </Link>
+            <div className="mt-3">
+                <Link to={`${url}${similerPost?.slug}`}>
+                    <h2
+                        className="block text-base font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
+                        {similerPost?.title.substring(0,40)}
+                    </h2>
+                </Link>
+                
+                <div className="grid gap-1 grid-cols-3">
+                    <div className="flex text-gray-400 text-sm items-center col-span-2">
+                        <span className="mr-1 text-xs"><i className="far fa-clock"></i></span>
+                        {fDate(similerPost?.createdAt)}
+                    </div>
+                    <div className="flex space-x-3 justify-end">
+                        <div className="flex text-gray-400 text-sm items-right">
+                            <span className="mr-2 text-xs">
+                                <i className="far fa-eye"></i>
+                            </span>
+                            {fShortenNumber(similerPost?.view_count)}
+                        </div>
+                        <div className="flex text-gray-400 text-sm items-right">
+                            <span className="mr-2 text-xs">
+                                <i className="far fa-comment"></i>
+                            </span>
+                            {fShortenNumber(similerPost?.commentCount)}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div className="rounded-sm bg-white p-3 pb-5 shadow-sm hidden md:block">
-        <a href="#" className="block rounded-md overflow-hidden">
-            <img src="src/images/img-6.jpg"
-                className="w-full h-40 object-cover transform hover:scale-110 transition duration-500"/>
-        </a>
-        <div className="mt-3">
-            <a href="#">
-                <h2
-                    className="block text-base font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-                    Lorem, ipsum dolor amet sit consec tetur elit.
-                </h2>
-            </a>
-            <div className="mt-2 flex space-x-3">
-                <div className="flex text-gray-400 text-xs items-center">
-                    <span className="mr-1 text-xs">
-                        <i className="far fa-user"></i>
-                    </span>
-                    Blogging Tips
-                </div>
-                <div className="flex text-gray-400 text-xs items-center">
-                    <span className="mr-1 text-xs">
-                        <i className="far fa-clock"></i>
-                    </span>
-                    June 11, 2021
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-  )
+    )
 }

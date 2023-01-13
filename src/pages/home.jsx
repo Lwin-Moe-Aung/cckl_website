@@ -28,7 +28,7 @@ export function Home() {
     const controller = new AbortController();
     const getAllPosts = async () => {
       try {
-        const posts = await axios.get(getAllPostsUrl,{ params: { page: 0, size: 40 }},{
+        const posts = await axios.get(getAllPostsUrl,{ params: { page: 0, size: 4 }},{
           signal: controller.signal
         });
 

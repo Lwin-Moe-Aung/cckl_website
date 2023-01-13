@@ -39,7 +39,7 @@ export function BlogPostCard({ post }) {
           >
             <h2
               className="block text-xl font-semibold text-gray-700 hover:text-blue-500 transition font-roboto">
-              {post?.title}
+              {post?.title.length > 40 ? `${post?.title.substring(0,45)}..` : post?.title}
             </h2>
           </Link>
         
