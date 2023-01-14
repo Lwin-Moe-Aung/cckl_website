@@ -16,7 +16,6 @@ function App() {
       <Route path="/blog" element={<BlogLayout />} >
           <Route path="" element={<Blog />} />
           <Route path="watch" element={<PostDetail />} />
-          <Route path="category" element={<Blog />} />
 
       </Route>
       <Route path="*" element={<Navigate to="/home" replace />} />
