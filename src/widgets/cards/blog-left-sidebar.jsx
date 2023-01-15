@@ -15,7 +15,7 @@ export const BlogLeftSideBar = () => {
       const controller = new AbortController();
       const getPosts = async () => {
         try {
-            const posts = await axios.get(url, { params: { limit: 3 }}, {
+            const posts = await axios.get(url, { params: { limit: 4 }}, {
                 signal: controller.signal
             });
             if(isMounted) setPosts(posts.data);

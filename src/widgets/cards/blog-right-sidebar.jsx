@@ -11,7 +11,7 @@ export const BlogRightSideBar = () => {
       const controller = new AbortController();
       const getPosts = async () => {
         try {
-            const posts = await axios.get(url, { params: { limit: 3 }}, {
+            const posts = await axios.get(url, { params: { limit: 5 }}, {
                 signal: controller.signal
             });
             if(isMounted) setPosts(posts.data);
@@ -44,7 +44,7 @@ export const BlogRightSideBar = () => {
         </div>
 
         {/* categories */}
-        <TagCategories/>
+        {/* <TagCategories/> */}
       </div>
   )
 }

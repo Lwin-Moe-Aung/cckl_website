@@ -11,6 +11,8 @@ export * from "@/widgets/cards/similer-post";
 export * from "@/widgets/cards/post-view";
 export * from "@/widgets/cards/alert";
 export * from "@/widgets/cards/sidebar-show-posts";
+export * from "@/widgets/cards/profile-drop-down";
+
 
 
 

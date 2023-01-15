@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { fDate } from '@/utils/formatTime';
 import { Avatar, Typography } from "@material-tailwind/react";
 import { fShortenNumber } from '@/utils/formatNumber';
+import { Link } from 'react-router-dom';
+
 
 export const PostView = ({post}) => {
     const [modalImage, setModalImage] = useState(null);
+    const catUrl = "/blog?cat=";
 
     const openImageModal = (img) => {
         setModalImage(img);
@@ -42,12 +45,20 @@ export const PostView = ({post}) => {
 
             <div className="flex items-center flex-wrap gap-2 mt-5">
                 {post?.categories.map((category, index) => (
-                    <a href="" key={index}
-                        className="px-3 py-1  text-sm border border-gray-200 rounded-sm transition hover:bg-blue-500 hover:text-white">
-                            {category.name}
-                    </a>
+                    <Link
+                        key={index}
+                        to={`${catUrl}${category.slug}`}
+                        className="px-3 py-1  text-sm border border-gray-200 rounded-sm transition hover:bg-blue-500 hover:text-white"
+                    >
+                        {category.name}
+                    </Link>
+                    
                 ))}
             </div>
+            {/* <a href="" key={index}
+                        className="px-3 py-1  text-sm border border-gray-200 rounded-sm transition hover:bg-blue-500 hover:text-white">
+                            {category.name}
+                    </a> */}
             {/* image list */}
            
             <div className="mt-5 pt-5 grid gap-3 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-2 border-t border-gray-200">

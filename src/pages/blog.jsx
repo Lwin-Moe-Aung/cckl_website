@@ -49,6 +49,7 @@ export const Blog = () => {
     //window.scrollTo(0, 0)
   };
   console.log(posts)
+  window.scroll(0, 0);
   return (
     <>
       <div className="xl:w-6/12 lg:w-9/12 w-full  xl:ml-6 lg:mr-6">

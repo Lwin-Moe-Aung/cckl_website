@@ -3,16 +3,15 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   Navbar as MTNavbar,
-  MobileNav,
-  Typography,
   Button,
-  IconButton,
 } from "@material-tailwind/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import NavConfig from "./navconfig";
+import useAuth from "@/hooks/useAuth";
+import { Categories, ProfileDropDown } from "../cards";
 
 export function Navbar({ brandName, action }) {
+  const { auth ,logout } = useAuth();
   const [openNav, setOpenNav] = React.useState(false);
+  const Base_Url = "http://localhost:5173";
 
   React.useEffect(() => {
     window.addEventListener(
@@ -33,45 +32,6 @@ export function Navbar({ brandName, action }) {
     document.querySelector('#sidebar_wrapper').classList.add('opacity-0')
     document.querySelector('#sidebar_wrapper').classList.add('invisible')
   }
-  const navList = (
-    <ul classNameName="mb-4 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {NavConfig.map(({ name, path, icon, href, target }) => (
-        <Typography
-          key={name}
-          as="li"
-          variant="small"
-          color="inherit"
-          classNameName="capitalize"
-        >
-          {href ? (
-            <a
-              href={href}
-              target={target}
-              classNameName="flex items-center gap-1 p-1 font-normal"
-            >
-              {icon &&
-                React.createElement(icon, {
-                  classNameName: "w-[18px] h-[18px] opacity-75 mr-1",
-                })}
-              {name}
-            </a>
-          ) : (
-            <Link
-              to={path}
-              target={target}
-              classNameName="flex items-center gap-1 p-1 font-normal"
-            >
-              {icon &&
-                React.createElement(icon, {
-                  classNameName: "w-[18px] h-[18px] opacity-75 mr-1",
-                })}
-              {name}
-            </Link>
-          )}
-        </Typography>
-      ))}
-    </ul>
-  );
 
   return (
     <>
@@ -84,7 +44,7 @@ export function Navbar({ brandName, action }) {
                     to="/home"
                     className="flex items-center font-semibold text-sm  transition hover:text-blue-500"
                   >
-                    <img src="img/logo.png" alt="logo" className="w-full"/>
+                    <img src={`${Base_Url}/img/logo.png`} alt="logo" className="w-full"/>
                   </Link>
                   
               </div>
@@ -101,15 +61,7 @@ export function Navbar({ brandName, action }) {
                     </span>
                     Home
                   </Link>
-                  <Link
-                    to="/profile"
-                    className="flex items-center font-semibold text-sm  transition hover:text-blue-500"
-                  >
-                    <span className="mr-2">
-                        <i className="fas fa-user"></i>
-                    </span>
-                    Profile
-                  </Link>
+
                   <Link
                     to="/blog"
                     className="flex items-center font-semibold text-sm  transition hover:text-blue-500"
@@ -129,18 +81,41 @@ export function Navbar({ brandName, action }) {
                       className="block w-full shadow-sm border-none rounded-3xl  pl-11 pr-2 py-2 focus:outline-none bg-gray-50 text-sm text-gray-700 placeholder-gray-500"
                       placeholder="Search"/>
               </div>
-              <div className="lg:ml-5 ml-auto justify-end">
-                <a href="#"
-                    className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center">
-                    <span className="mr-2">
+
+              {auth ? (
+                <div className="relative">
+                  <ProfileDropDown />
+                </div>) :
+                (<>
+                  <div className="relative lg:ml-auto hidden lg:block">
+                    <Link
+                      to="/sign-in"
+                      className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center"
+                    >
+                      <span className="mr-2">
                         <i className="far fa-user"></i>
-                    </span>
-                    Login/Register</a>
-              </div>
+                      </span>
+                      Login
+                    </Link>
+                  </div>
+                  <div className="relative lg:ml-auto hidden lg:block">
+                    <Link
+                      to="/sign-up"
+                      className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center"
+                    >
+                      <span className="mr-2">
+                      <i className="far fa-user"></i>
+                      </span>
+                      Register
+                    </Link>
+                  </div>
+                </>)
+              }
+           
               {/* <!-- searchbar --> */}
               
-              <div className="text-xl text-gray-700 cursor-pointer ml-4 lg:hidden block hover:text-blue-500 transition"
-                  id="open_sidebar" onClick={openSidebar}>
+              <div className="text-xl text-gray-700 cursor-pointer ml-4 lg:hidden block hover:text-blue-500 transition xs:justify-end"
+                  id="open_sidebar" onClick={openSidebar} style={{ marginLeft: '130px' }}>
                   <i className="fas fa-bars"></i>
               </div>
               {/* <!-- searchbar end --> */}
@@ -163,7 +138,56 @@ export function Navbar({ brandName, action }) {
                       className="block w-full shadow-sm border-none rounded-3xl  pl-11 pr-2 py-2 focus:outline-none bg-gray-50 text-sm text-gray-700 placeholder-gray-500"
                       placeholder="Search"/>
               </div>
-
+               {auth ? (
+                  <div className="grid gap-1 grid-row-3">
+                    <div className="flex text-gray-400 text-sm items-center">
+                      <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white ml-4 mt-3" src={auth?.user.photo || 'img/guest-user.png'} alt="sadf"/>
+                    </div>
+                    <p className="text-gray-700 block  text-sm ml-4">Signed in as</p>
+                    <p className="text-black block  text-md ml-4">{ auth?.user.email }</p>
+                    <Link 
+                        onClick={()=>setOpen(false)}
+                        to='/profile' 
+                        className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500">
+                        <span className="mr-2">
+                            <i className="fas fa-user"></i>
+                        </span>
+                        Profile
+                    </Link>
+                    <Link 
+                        onClick={()=> logout()}
+                        className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500">
+                        <span className="mr-2">
+                            <i className="fa-solid fa-right-from-bracket"></i>
+                        </span>
+                        Logout
+                    </Link>
+                  </div>
+                ) :
+                (<>
+                  <div className="">
+                    <Link
+                      to="/sign-in"
+                      className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500"
+                    >
+                      <span className="mr-2">
+                        <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                      </span>
+                      Login
+                    </Link>
+                 
+                    <Link
+                      to="/sign-up"
+                      className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500"
+                    >
+                      <span className="mr-2">
+                        <i className="fa-solid fa-registered"></i>
+                      </span>
+                      Register
+                    </Link>
+                  </div>
+                </>)
+              }
               {/* <!-- navlink --> */}
               <h3 className="text-xl font-semibold text-gray-700 mb-1 font-roboto pl-3 pt-3">Menu</h3>
               <div className="">
@@ -176,15 +200,7 @@ export function Navbar({ brandName, action }) {
                     </span>
                     Home
                   </Link>
-                  <Link
-                    to="/profile"
-                    className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500"
-                  >
-                    <span className="mr-2">
-                        <i className="fas fa-user"></i>
-                    </span>
-                    Profile
-                  </Link>
+                  
                   <Link
                     to="/blog"
                     className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500"
@@ -198,91 +214,7 @@ export function Navbar({ brandName, action }) {
               {/* <!-- navlinks end --> */}
 
               {/* <!-- categories --> */}
-              <div className="w-full mt-3 px-4 ">
-                  <h3 className="text-xl font-semibold text-gray-700 mb-3 font-roboto">Categories</h3>
-                  <div className="space-y-2">
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Beauti</span>
-                          <p className="ml-auto font-normal">(12)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Business</span>
-                          <p className="ml-auto font-normal">(15)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Fashion</span>
-                          <p className="ml-auto font-normal">(5)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Food</span>
-                          <p className="ml-auto font-normal">(10)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Learn</span>
-                          <p className="ml-auto font-normal">(3)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Music</span>
-                          <p className="ml-auto font-normal">(7)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Nature</span>
-                          <p className="ml-auto font-normal">(0)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>People</span>
-                          <p className="ml-auto font-normal">(13)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Sports</span>
-                          <p className="ml-auto font-normal">(7)</p>
-                      </a>
-                      <a href="#"
-                          className="flex leading-4 items-center text-gray-700 font-semibold text-sm uppercase transition hover:text-blue-500">
-                          <span className="mr-2">
-                              <i className="far fa-folder-open"></i>
-                          </span>
-                          <span>Technology</span>
-                          <p className="ml-auto font-normal">(17)</p>
-                      </a>
-                  </div>
-              </div>
+              <Categories/>
           </div>
       </div>
     </>

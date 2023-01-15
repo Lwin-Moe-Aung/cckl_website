@@ -62,6 +62,8 @@ export function PostDetail(){
 
     }, [post]);
   
+    window.scroll(0, 0);
+
     return (
         <>
          
