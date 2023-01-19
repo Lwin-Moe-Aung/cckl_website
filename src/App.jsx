@@ -1,8 +1,9 @@
 import { Routes, Route, Navigate  } from "react-router-dom";
 import { Layout, BlogLayout } from "@/widgets/layout";
 import { Home, Profile, SignIn, SignUp , PostDetail, Blog} from "@/pages";
-import PersistLogin from "./components/persist-login";
-import RequireAuth from "./components/require-auth";
+import PersistLogin from "./components/persist-login/PersistLogin";
+import RequireAuth from "./components/require-auth/RequireAuth";
+import { PostProvider } from "./context/PostContext";
 
 function App() {
   return (
@@ -19,7 +20,14 @@ function App() {
         
         <Route  element={<BlogLayout />} >
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/watch" element={<PostDetail />} />
+            <Route 
+              path="/blog/watch" 
+              element={
+                <PostProvider>
+                  <PostDetail />
+                </PostProvider>
+              } 
+            />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/home" replace />} />

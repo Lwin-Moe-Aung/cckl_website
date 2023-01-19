@@ -10,69 +10,40 @@ import {
 import { Footer } from "@/widgets/layout";
 import axios from "@/api/axios";
 import { PostView, Comment, SimilerPost, Alert } from "@/widgets/cards";
+import { usePost } from "@/context/PostContext";
+import { useAsyncFn } from "@/hooks/useAsync";
+import { CommentForm } from "@/components/comment/CommentForm";
+import { createComment } from "@/services/comment";
+import { CommentList } from "@/components/comment/CommentList";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 
 export function PostDetail(){
-    const [post, setPost] = useState(null);
-    const [similerPosts, setSimilerPosts] = useState(null);
-    const [errMsg, setErrMsg] = useState('');
-    const [searchParams, setSearchParams] = useSearchParams();
+    const axiosPirvate = useAxiosPrivate();
+    const { post, error, rootComments, createLocalComment } = usePost();
+    const [commentError, setCommentError] = useState();
 
-    const slug = searchParams.get('b');
-    const url = "/admin/posts";
-    const similerPostsUrl = "/admin/posts/related";
-
-    useEffect(() => {
-        const getPost = async () => {
-            try {
-                const post = await axios.get(`${url}/${slug}`);
-                setPost(post?.data);
-            } catch (error) {
-                if(error.response.status === 400) {
-                    setErrMsg(error.response.data.message)
-                }else{
-                    setErrMsg("Something Wrong!");
-                }
-            }
+    const onCommentCreate = async (comment) => {
+        try{
+            const newComment = await axiosPirvate.post(
+                `/admin/posts-comments/${post?.id}/comments`,
+                JSON.stringify({comment})
+                );
+            createLocalComment(newComment.data);
+        }catch(error){
+            setCommentError(error);
         }
-        getPost();
-    }, [slug]);
-
-    useEffect(() => {
-        const getRelatedPosts = async () => {
-          try {
-                let cat = ''
-                post?.categories.map(item => {
-                    cat = cat === '' ? `${item.slug}` : `${cat}&${item.slug}`;
-                });
-                const sPost = await axios.get(
-                    similerPostsUrl,
-                    {params: {cat, limit: 3, selfPostSlug: post?.slug}}
-                    );
-                    // console.log(sPost.data)
-                await setSimilerPosts(sPost?.data);
-            } catch (error) {
-                if(error.response.status === 400) {
-                    setErrMsg(error.response.data.message)
-                }else{
-                    setErrMsg("Something Wrong!");
-                }
-            }
-        }
-        getRelatedPosts();
-
-    }, [post]);
-  
-    window.scroll(0, 0);
-
+    }
+   
+    // window.scroll(0, 0);
     return (
         <>
          
-          {errMsg && 
-            <Alert errMsg={errMsg}/>
-          }
+          {/* {error && 
+            <Alert errMsg={error}/>
+          } */}
           <div className="xl:w-6/12 lg:w-9/12 w-full  xl:ml-6 lg:mr-6">
             {/*  post view  */}
-            {post !== null ? <PostView post={post}/> : null}
+            { Object.keys(post).length !== 0 ? <PostView post={post}/> : null }
            
             {/*  title  */}
             <div className="flex bg-white px-3 py-2 justify-between items-center rounded-sm mt-8">
@@ -85,12 +56,25 @@ export function PostDetail(){
 
             {/*  similer post  */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
-                {similerPosts?.map((similerPost, index) => (
+                {post?.relatedPosts?.map((similerPost, index) => (
                     <SimilerPost key={index} similerPost ={similerPost}/>
                 ))}
             </div>
             {/*  comment  */}
-            <Comment/>
+            <div className="p-4 bg-white rounded-sm shadow-sm mt-8">
+                <CommentForm
+                    loading={false}
+                    error={error}
+                    onSubmit={onCommentCreate}
+                />
+                <div className="error-msg">{commentError}</div>
+
+            </div>
+                {rootComments != null && rootComments.length > 0 && (
+                    <div className="mt-4">
+                        <CommentList comments={rootComments} />
+                    </div>
+                )}
           </div>
         </>
     );

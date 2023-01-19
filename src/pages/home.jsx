@@ -16,43 +16,46 @@ import { BlogPostCard, FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
 
 import axios from '@/api/axios'
+import { getAllPosts } from "@/services/blog-post";
+import { useAsync } from "@/hooks/useAsync";
 
 export function Home() {
-  const [posts, setPosts] = useState();
-  const [totalPages, setTotalPages] = useState();
-  const [errMsg, setErrMsg] = useState('');
-  const getAllPostsUrl = "/admin/posts/all"
+  // const [posts, setPosts] = useState();
+  // const [totalPages, setTotalPages] = useState();
+  // const [errMsg, setErrMsg] = useState('');
 
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-    const getAllPosts = async () => {
-      try {
-        const posts = await axios.get(getAllPostsUrl,{ params: { page: 0, size: 4 }},{
-          signal: controller.signal
-        });
+  const {loading, error, value: posts } = useAsync(getAllPosts);
+  // const getAllPostsUrl = "/admin/posts/all"
 
-        if(isMounted){
-          setPosts(posts.data.data);
-          setTotalPages(posts.data.totalPages);
-          setErrMsg('')
-        }
-      } catch (error) {
-        if(error.response.status === 400) {
-          setErrMsg(error.response.data.message)
-        }else{
-          setErrMsg("Something Wrong!");
-        }
-      }
-    }
-    getAllPosts()
-    return () => {
-      isMounted = false;
-      controller.abort();
-    }
-  },[])
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   const controller = new AbortController();
+  //   const getAllPosts = async () => {
+  //     try {
+  //       const posts = await axios.get(getAllPostsUrl,{ params: { page: 0, size: 4 }},{
+  //         signal: controller.signal
+  //       });
 
-  console.log(posts);
+  //       if(isMounted){
+  //         setPosts(posts.data.data);
+  //         setTotalPages(posts.data.totalPages);
+  //         setErrMsg('')
+  //       }
+  //     } catch (error) {
+  //       if(error.response.status === 400) {
+  //         setErrMsg(error.response.data.message)
+  //       }else{
+  //         setErrMsg("Something Wrong!");
+  //       }
+  //     }
+  //   }
+  //   getAllPosts()
+  //   return () => {
+  //     isMounted = false;
+  //     controller.abort();
+  //   }
+  // },[])
+
   return (
     <>
       <div className="relative flex h-screen content-center items-center justify-center pt-16 pb-32">
@@ -94,7 +97,7 @@ export function Home() {
           </div>
           <div className="mt-32 flex flex-wrap items-center">
             <div className="mt-24 grid grid-cols-1 gap-12 gap-x-10 md:grid-cols-2 xl:grid-cols-4">
-              {posts?.map((post, index) => (
+              {posts?.data.map((post, index) => (
                   <BlogPostCard
                     key={index}
                     post={post}
@@ -112,7 +115,7 @@ export function Home() {
             Ted, Scambos, NSIDClead scentist, puts the potentially record
             maximum.
           </PageTitle>
-          {errMsg && 
+          {error && 
             <Alert
               icon={
                 <svg
@@ -131,7 +134,7 @@ export function Home() {
                 </svg>
               }
             >
-              {errMsg}
+              {error}
             </Alert>
           }
           
