@@ -27,7 +27,7 @@ export function Comment({
     const [areChildrenHidden, setAreChildrenHidden] = useState(false)
     const [isReplying, setIsReplying] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [error, setError] = useState();
+    const [error, setError] = useState('');
     const {
         post,
         getReplies,
@@ -52,6 +52,7 @@ export function Comment({
                 );
             setIsReplying(false)
             createLocalComment(newComment.data);
+            setError('')
         }catch(error){
             if(error.response.status == 400) setError(error.response.data.message)
             else setError("Something wrong!")
@@ -66,28 +67,37 @@ export function Comment({
                 );
             setIsEditing(false)
             updateLocalComment(id, newComment.data.comment);
+            setError('')
         }catch(error){
             if(error.response.status == 400) setError(error.response.data.message)
             else setError("Something wrong!")
         }
-        // return updateCommentFn
-        // .execute({ postId: post.id, comment, id })
-        // .then(comment => {
-        //     setIsEditing(false)
-        //     (id, comment.comment)
-        // })
     }
 
-    function onCommentDelete() {
-        return deleteCommentFn
-        .execute({ postId: post.id, id })
-        .then(comment => deleteLocalComment(comment.id))
+    const onCommentDelete = async () => {
+        try{
+            const comment = await axiosPirvate.delete(
+                `/admin/posts-comments/${post?.id}/comments/${id}`);
+            deleteLocalComment(comment.data);
+            setError('')
+        }catch(error){
+            if(error.response.status == 400) setError(error.response.data.message)
+            else setError("Something wrong!")
+        }
     }
 
-    function onToggleCommentLike() {
-        return toggleCommentLikeFn
-        .execute({ id, postId: post.id })
-        .then(({ addLike }) => toggleLocalCommentLike(id, addLike))
+    const onToggleCommentLike = async () => {
+        try{
+            const like = await axiosPirvate.post(
+                `/admin/posts-comments/${post?.id}/comments/${id}/toggleLike`);
+            
+            console.log(like.data.addLike);
+            toggleLocalCommentLike(id, like.data.addLike);
+            setError('')
+        }catch(error){
+            if(error.response.status == 400) setError(error.response.data.message)
+            else setError("Something wrong!")
+        }
     }
 
   return (
