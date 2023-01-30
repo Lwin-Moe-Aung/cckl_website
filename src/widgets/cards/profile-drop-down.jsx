@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 export const ProfileDropDown = () => {
     const [open, setOpen] = useState(false);
     const { auth, logout } = useAuth();
-    const handelLogout = () => {
+    const handelLogout = (e) => {
+        e.preventDefault();
         setOpen(false);
         logout();
     }

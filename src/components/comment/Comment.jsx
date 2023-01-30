@@ -10,6 +10,7 @@ import { CommentForm } from "./CommentForm"
 import useAuth from "@/hooks/useAuth";
 import './style.css';
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   dateStyle: "medium",
@@ -43,8 +44,20 @@ export function Comment({
     const childComments = getReplies(id)
     const {auth} = useAuth();
     const axiosPirvate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const pathname = `${location?.pathname}${location?.search}`
+
+    const checkLogin = () => {
+        if(!auth){
+            navigate("/sign-in", { state: { from:{pathname}}})
+            return;
+        } 
+        return true;
+    }
 
     const onCommentReply = async (comment) => {
+        checkLogin();
         try{
             const newComment = await axiosPirvate.post(
                 `/admin/posts-comments/${post?.id}/comments`,
@@ -60,6 +73,7 @@ export function Comment({
     }
 
     const onCommentUpdate = async (comment) => {
+        checkLogin();
         try{
             const newComment = await axiosPirvate.put(
                 `/admin/posts-comments/${post?.id}/comments/${id}`,
@@ -75,6 +89,7 @@ export function Comment({
     }
 
     const onCommentDelete = async () => {
+        checkLogin();
         try{
             const comment = await axiosPirvate.delete(
                 `/admin/posts-comments/${post?.id}/comments/${id}`);
@@ -87,6 +102,7 @@ export function Comment({
     }
 
     const onToggleCommentLike = async () => {
+        checkLogin();
         try{
             const like = await axiosPirvate.post(
                 `/admin/posts-comments/${post?.id}/comments/${id}/toggleLike`);

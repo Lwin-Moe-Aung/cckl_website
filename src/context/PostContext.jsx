@@ -4,6 +4,7 @@ import { useAsync } from "@/hooks/useAsync"
 import { getPost } from "@/services/blog-post"
 import axios from "../api/axios";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import useAuth from "@/hooks/useAuth";
 
 const Context = React.createContext()
 
@@ -12,11 +13,12 @@ export function usePost() {
 }
 
 export function PostProvider({ children }) {
+    const {auth} = useAuth();
     const axiosPirvate = useAxiosPrivate();
     const [searchParams, setSearchParams] = useSearchParams();
     const slug = searchParams.get('b');
    
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState({});
     const [error, setError] = useState();
     const [comments, setComments] = useState([]);
     const url = "/admin/posts";
@@ -24,7 +26,13 @@ export function PostProvider({ children }) {
     useEffect(() => {
         const getPost = async () => {
             try {
-                const post = await axiosPirvate.get(`${url}/${slug}`);
+                const post = auth != null 
+                            ? await axiosPirvate.get(`${url}/${slug}`) 
+                            : await axios.get(`${url}/${slug}`)
+
+                console.log(post);
+                // const post = await axiosPirvate.get(`${url}/${slug}`);
+                // console.log(post);
                 setPost(post.data);
             } catch (error) {
                 if(error.response.status === 400) {

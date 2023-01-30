@@ -27,7 +27,8 @@ export function SignIn() {
   const LOGIN_URL = '/auth/login';
   const from = location.state?.from?.pathname || "/";
 
-  
+  console.log(location.state);
+
   const onSubmit = async (data) => {
     
     try{

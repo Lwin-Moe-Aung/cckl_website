@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import { Avatar, Typography, Button } from "@material-tailwind/react";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import {
     ClockIcon,
     BriefcaseIcon,
@@ -16,13 +16,23 @@ import { CommentForm } from "@/components/comment/CommentForm";
 import { createComment } from "@/services/comment";
 import { CommentList } from "@/components/comment/CommentList";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import useAuth from "@/hooks/useAuth";
 
 export function PostDetail(){
+
+    const location = useLocation();
+    const navigate = useNavigate()
+    const {auth} = useAuth();
     const axiosPirvate = useAxiosPrivate();
     const { post, error, rootComments, createLocalComment } = usePost();
     const [commentError, setCommentError] = useState();
+    const pathname = `${location?.pathname}${location?.search}`
 
     const onCommentCreate = async (comment) => {
+        if(!auth){
+            navigate("/sign-in", { state: { from:{pathname}}})
+            return;
+        } 
         try{
             const newComment = await axiosPirvate.post(
                 `/admin/posts-comments/${post?.id}/comments`,

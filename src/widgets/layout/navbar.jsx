@@ -20,6 +20,11 @@ export function Navbar({ brandName, action }) {
     );
   }, []);
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+  }
+
   const openSidebar = () => {
     document.querySelector('#sidebar').classList.remove('-left-80')
     document.querySelector('#sidebar').classList.add('left-0')
@@ -155,7 +160,7 @@ export function Navbar({ brandName, action }) {
                         Profile
                     </Link>
                     <Link 
-                        onClick={()=> logout()}
+                        onClick={handleLogout}
                         className="flex px-4 py-1 uppercase items-center font-semibold text-sm  transition hover:text-blue-500">
                         <span className="mr-2">
                             <i className="fa-solid fa-right-from-bracket"></i>

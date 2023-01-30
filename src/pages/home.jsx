@@ -2,8 +2,6 @@ import React from "react";
 import {useState, useEffect } from "react";
 import {
   Card,
-  CardBody,
-  CardHeader,
   Typography,
   Button,
   IconButton,
@@ -14,47 +12,31 @@ import {
 import { PageTitle, Footer } from "@/widgets/layout";
 import { BlogPostCard, FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
-
 import axios from '@/api/axios'
-import { getAllPosts } from "@/services/blog-post";
-import { useAsync } from "@/hooks/useAsync";
 
 export function Home() {
-  // const [posts, setPosts] = useState();
-  // const [totalPages, setTotalPages] = useState();
-  // const [errMsg, setErrMsg] = useState('');
+  const [posts, setPosts] = useState();
+  const [error, setError] = useState('');
 
-  const {loading, error, value: posts } = useAsync(getAllPosts);
-  // const getAllPostsUrl = "/admin/posts/all"
+  // const {loading, error, value: posts } = useAsync(getAllPosts);
+  const getAllPostsUrl = "/admin/posts/all?page=0&size=4"
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   const controller = new AbortController();
-  //   const getAllPosts = async () => {
-  //     try {
-  //       const posts = await axios.get(getAllPostsUrl,{ params: { page: 0, size: 4 }},{
-  //         signal: controller.signal
-  //       });
-
-  //       if(isMounted){
-  //         setPosts(posts.data.data);
-  //         setTotalPages(posts.data.totalPages);
-  //         setErrMsg('')
-  //       }
-  //     } catch (error) {
-  //       if(error.response.status === 400) {
-  //         setErrMsg(error.response.data.message)
-  //       }else{
-  //         setErrMsg("Something Wrong!");
-  //       }
-  //     }
-  //   }
-  //   getAllPosts()
-  //   return () => {
-  //     isMounted = false;
-  //     controller.abort();
-  //   }
-  // },[])
+  useEffect(() => {
+    const getAllPosts = async () => {
+      try {
+        const posts = await axios.get(getAllPostsUrl);
+        setPosts(posts.data.data);
+        setError("")
+      } catch (err) {
+        if(err.response.status === 400) {
+          setError(err.response.data.message)
+        }else{
+          setError("Something Wrong!");
+        }
+      }
+    }
+    getAllPosts()
+  },[])
 
   return (
     <>
@@ -97,7 +79,7 @@ export function Home() {
           </div>
           <div className="mt-32 flex flex-wrap items-center">
             <div className="mt-24 grid grid-cols-1 gap-12 gap-x-10 md:grid-cols-2 xl:grid-cols-4">
-              {posts?.data.map((post, index) => (
+              {posts?.map((post, index) => (
                   <BlogPostCard
                     key={index}
                     post={post}
