@@ -2,7 +2,10 @@ import { Button } from '@material-tailwind/react'
 import React, {useState} from 'react'
 import useAuth from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
+import {useTranslation} from 'react-i18next'
+
 export const ProfileDropDown = () => {
+    const {t} = useTranslation()
     const [open, setOpen] = useState(false);
     const { auth, logout } = useAuth();
     const handelLogout = (e) => {
@@ -27,7 +30,7 @@ export const ProfileDropDown = () => {
                         <span className="mr-2">
                             <i className="fas fa-user"></i>
                         </span>
-                        Profile
+                        {t('nav.profile')}
                     </Link>
                     <Link 
                         onClick={handelLogout}
@@ -35,7 +38,7 @@ export const ProfileDropDown = () => {
                         <span className="mr-2">
                             <i className="fa-solid fa-right-from-bracket"></i>
                         </span>
-                        Logout
+                        {t('nav.logout')}
                     </Link>
                     
                 </div>

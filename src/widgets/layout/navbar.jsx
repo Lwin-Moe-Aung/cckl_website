@@ -6,9 +6,11 @@ import {
   Button,
 } from "@material-tailwind/react";
 import useAuth from "@/hooks/useAuth";
-import { Categories, ProfileDropDown } from "../cards";
+import { Categories, ProfileDropDown, LanguageDropDown } from "../cards";
+import {useTranslation} from 'react-i18next'
 
 export function Navbar({ brandName, action }) {
+  const {t} = useTranslation()
   const { auth ,logout } = useAuth();
   const [openNav, setOpenNav] = React.useState(false);
   const Base_Url = "http://localhost:5173";
@@ -42,7 +44,17 @@ export function Navbar({ brandName, action }) {
     <>
       {/* // <!-- navbar --> */}
       <nav className="shadow-sm">
+        <div className="grid grid-cols-2">
           <div className="container px-4 mx-auto flex items-center py-3">
+            
+              {/* <!-- searchbar --> */}
+              
+              <div className="text-xl text-gray-700 cursor-pointer lg:hidden block hover:text-blue-500 transition xs:justify-start"
+                  id="open_sidebar" onClick={openSidebar} >
+                  <i className="fas fa-bars"></i>
+              </div>
+              {/* <!-- searchbar end --> */}
+
               {/* <!-- logo --> */}
               <div className="lg:w-44 w-40">
                   <Link
@@ -64,7 +76,7 @@ export function Navbar({ brandName, action }) {
                     <span className="mr-2">
                         <i className="fas fa-home"></i>
                     </span>
-                    Home
+                    {t('nav.home')}
                   </Link>
 
                   <Link
@@ -74,7 +86,7 @@ export function Navbar({ brandName, action }) {
                     <span className="mr-2">
                         <i className="fas fa-blog"></i>
                     </span>
-                    Blog
+                    {t('nav.blog')}
                   </Link>
               </div>
               {/* <!-- navlinks end --> */}
@@ -100,7 +112,7 @@ export function Navbar({ brandName, action }) {
                       <span className="mr-2">
                         <i className="far fa-user"></i>
                       </span>
-                      Login
+                      {t('nav.login')}
                     </Link>
                   </div>
                   <div className="relative lg:ml-auto hidden lg:block">
@@ -111,21 +123,20 @@ export function Navbar({ brandName, action }) {
                       <span className="mr-2">
                       <i className="far fa-user"></i>
                       </span>
-                      Register
+                      {t('nav.register')}
                     </Link>
                   </div>
                 </>)
               }
            
-              {/* <!-- searchbar --> */}
-              
-              <div className="text-xl text-gray-700 cursor-pointer ml-4 lg:hidden block hover:text-blue-500 transition xs:justify-end"
-                  id="open_sidebar" onClick={openSidebar} style={{ marginLeft: '130px' }}>
-                  <i className="fas fa-bars"></i>
-              </div>
-              {/* <!-- searchbar end --> */}
-
+              {/* language changing drop down menu */}
           </div>
+          <div className="container mx-auto flex items-center justify-end">
+            <LanguageDropDown />
+          </div>
+        </div>
+          
+          
       </nav>
 
       {/* Mobile view */}
@@ -157,7 +168,7 @@ export function Navbar({ brandName, action }) {
                         <span className="mr-2">
                             <i className="fas fa-user"></i>
                         </span>
-                        Profile
+                        {t('nav.profile')}
                     </Link>
                     <Link 
                         onClick={handleLogout}
@@ -165,7 +176,7 @@ export function Navbar({ brandName, action }) {
                         <span className="mr-2">
                             <i className="fa-solid fa-right-from-bracket"></i>
                         </span>
-                        Logout
+                        {t('nav.logout')}
                     </Link>
                   </div>
                 ) :

@@ -10,20 +10,28 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import React from "react";
+import React, {Suspense} from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import "../public/css/tailwind.css";
 import { AuthProvider } from "./context/AuthProvider";
+import   '../i18n'
 
+const loadingMarkup = (
+  <div className="py-4 text-center">
+    <h3>Loading..</h3>
+  </div>
+)
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <App />
+          <Suspense fallback={loadingMarkup}>
+            <App />
+          </Suspense>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

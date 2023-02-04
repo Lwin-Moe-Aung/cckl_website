@@ -13,10 +13,12 @@ import { PageTitle, Footer } from "@/widgets/layout";
 import { BlogPostCard, FeatureCard, TeamCard } from "@/widgets/cards";
 import { featuresData, teamData, contactData } from "@/data";
 import axios from '@/api/axios'
+import {useTranslation} from 'react-i18next'
 
 export function Home() {
   const [posts, setPosts] = useState();
   const [error, setError] = useState('');
+  const {t} = useTranslation()
 
   // const {loading, error, value: posts } = useAsync(getAllPosts);
   const getAllPostsUrl = "/admin/posts/all?page=0&size=4"
@@ -51,12 +53,10 @@ export function Home() {
                 color="white"
                 className="mb-6 font-black"
               >
-                Your story starts with us helloworld
+                { t('welcome.title') }
               </Typography>
               <Typography variant="lead" color="white" className="opacity-80">
-                This is a simple example of a Landing Page you can build using
-                Material Tailwind. It features multiple components based on the
-                Tailwind CSS and Material Design by Google.
+                {t('welcome.description')}
               </Typography>
             </div>
           </div>
