@@ -98,41 +98,43 @@ export function Navbar({ brandName, action }) {
                       className="block w-full shadow-sm border-none rounded-3xl  pl-11 pr-2 py-2 focus:outline-none bg-gray-50 text-sm text-gray-700 placeholder-gray-500"
                       placeholder="Search"/>
               </div>
-
-              {auth ? (
-                <div className="relative">
-                  <ProfileDropDown />
-                </div>) :
-                (<>
-                  <div className="relative lg:ml-auto hidden lg:block">
-                    <Link
-                      to="/sign-in"
-                      className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center"
-                    >
-                      <span className="mr-2">
-                        <i className="far fa-user"></i>
-                      </span>
-                      {t('nav.login')}
-                    </Link>
-                  </div>
-                  <div className="relative lg:ml-auto hidden lg:block">
-                    <Link
-                      to="/sign-up"
-                      className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center"
-                    >
-                      <span className="mr-2">
-                      <i className="far fa-user"></i>
-                      </span>
-                      {t('nav.register')}
-                    </Link>
-                  </div>
-                </>)
-              }
-           
               {/* language changing drop down menu */}
           </div>
-          <div className="container mx-auto flex items-center justify-end">
-            <LanguageDropDown />
+          <div className="grid grid-cols-2">
+            <div className="container mx-auto flex items-center justify-end">
+                {auth ? (
+                  <div className="relative">
+                    <ProfileDropDown />
+                  </div>) :
+                  (<>
+                    <div className="relative lg:ml-auto hidden lg:block">
+                      <Link
+                        to="/sign-in"
+                        className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center"
+                      >
+                        <span className="mr-2">
+                          <i className="far fa-user"></i>
+                        </span>
+                        {t('nav.login')}
+                      </Link>
+                    </div>
+                    <div className="relative lg:ml-auto hidden lg:block">
+                      <Link
+                        to="/sign-up"
+                        className=" text-sm  font-semibold hover:text-blue-500 transition flex items-center"
+                      >
+                        <span className="mr-2">
+                        <i className="far fa-user"></i>
+                        </span>
+                        {t('nav.register')}
+                      </Link>
+                    </div>
+                  </>)
+                }
+            </div>
+            <div className="container mx-auto flex items-center justify-end">
+              <LanguageDropDown />
+            </div>
           </div>
         </div>
           

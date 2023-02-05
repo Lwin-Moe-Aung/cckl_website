@@ -28,7 +28,7 @@ export const LanguageDropDown = () => {
         i18next.changeLanguage(e.target.value)
     }
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-end">
             <div className="mb-3 xl:w-15">
                 <select 
                     onChange={onChangeLang}

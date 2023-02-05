@@ -186,6 +186,12 @@ export function Home() {
           </form>
         </div>
       </section>
+      <section className="relative bg-blue-gray-50/50 py-24 px-4">
+        <div className="container mx-auto">
+          <iframe style={{ width:"100%", height:"400px" }} src="https://maps.google.com/maps?q=yangon%20shwedagon&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed">
+          </iframe>
+        </div>
+      </section>
       <div className="bg-blue-gray-50/50">
         <Footer />
       </div>
