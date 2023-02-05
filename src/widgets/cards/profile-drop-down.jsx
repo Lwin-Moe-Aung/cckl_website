@@ -14,7 +14,7 @@ export const ProfileDropDown = () => {
         logout();
     }
     return (
-        <div className="relative inline-block text-left hidden lg:block">
+        <div className="py-7 px-3 inline-block">
             <div>
                 <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src={auth?.user.photo || 'img/guest-user.png'} alt="sadf" onClick={()=> setOpen(!open)}/>
             </div>

@@ -11,5 +11,16 @@
   "welcome": {
     "title": "Your story starts with us helloworld",
     "description": "This is a simple example of a Landing Page you can build using Material Tailwind. It features multiple components based on the Tailwind CSS and Material Design by Google."
+  },
+  "men": {
+    "mgmg": "mgmg",
+    "aungaung": "aungaung",
+    "kyawkyaw": "kyawkyaw"
+  },
+  "women": {
+    "myamya": "myamya",
+    "hlahla": "hlahla",
+    "mumu": "mumu",
+    "susu": "susu"
   }
 }

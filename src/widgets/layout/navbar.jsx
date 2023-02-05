@@ -100,8 +100,11 @@ export function Navbar({ brandName, action }) {
               </div>
               {/* language changing drop down menu */}
           </div>
-          <div className="grid grid-cols-2">
+          <div class="flex flex-row-reverse">
             <div className="container mx-auto flex items-center justify-end">
+              <LanguageDropDown />
+            </div>
+            {/* <div className="mx-auto flex items-center justify-end"> */}
                 {auth ? (
                   <div className="relative">
                     <ProfileDropDown />
@@ -131,10 +134,8 @@ export function Navbar({ brandName, action }) {
                     </div>
                   </>)
                 }
-            </div>
-            <div className="container mx-auto flex items-center justify-end">
-              <LanguageDropDown />
-            </div>
+            {/* </div> */}
+            
           </div>
         </div>
           
