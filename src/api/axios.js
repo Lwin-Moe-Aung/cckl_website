@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://54.169.192.233:8080/api/';
+const BASE_URL = 'https://ccklos.org/api/';
 
 export default axios.create({
     baseURL: BASE_URL
