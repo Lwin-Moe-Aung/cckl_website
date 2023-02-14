@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://ccklos.org/api/';
+const BASE_URL = 'https://api.ccklos.org/api/';
 
 export default axios.create({
     baseURL: BASE_URL
