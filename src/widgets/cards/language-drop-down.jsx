@@ -28,7 +28,7 @@ export const LanguageDropDown = () => {
         i18next.changeLanguage(e.target.value)
     }
     return (
-        <div className="py-7 px-3 inline-block">
+        <div className="px-3 inline-block">
             <div className="mb-3 xl:w-15">
                 <select 
                     onChange={onChangeLang}
