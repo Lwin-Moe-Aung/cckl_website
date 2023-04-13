@@ -1,5 +1,6 @@
 {
   "language": "En",
+  "app_title": "CCKLOS Website",
   "nav": {
     "home": "home",
     "blog": "blog",
@@ -11,6 +12,7 @@
     "resources": "Resources",
     "get-involved": "Get Involved"
   },
+  
   "welcome": {
     "title": "Complex Conservation In Kachin Landscape Open Society",
     "description": "This is a simple example of a Landing Page you can build using Material Tailwind. It features multiple components based on the Tailwind CSS and Material Design by Google."
