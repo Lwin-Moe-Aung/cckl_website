@@ -1,101 +1,31 @@
 export const links = [
   {
-    name: "Men",
+    name: "Home",
     submenu: true,
+    head: "home",
     sublinks: [
-      {
-        Head: "men",
-        sublink: [
-          { name: "mgmg", link: "/" },
-          { name: "aungaung", link: "/" },
-          { name: "kyawkyaw", link: "/" },
-        ],
-      },
-      {
-        Head: "men",
-        sublink: [
-          { name: "mgmg", link: "/" },
-          { name: "aungaung", link: "/" },
-          { name: "kyawkyaw", link: "/" },
-        ],
-      },
-      {
-        Head: "men",
-        sublink: [
-          { name: "mgmg", link: "/" },
-          { name: "aungaung", link: "/" },
-          { name: "kyawkyaw", link: "/" },
-        ],
-      },
-
-      {
-        Head: "men",
-        sublink: [
-          { name: "mgmg", link: "/" },
-          { name: "aungaung", link: "/" },
-          { name: "kyawkyaw", link: "/" },
-        ],
-      },
-      {
-        Head: "men",
-        sublink: [
-          { name: "mgmg", link: "/" },
-          { name: "aungaung", link: "/" },
-          { name: "kyawkyaw", link: "/" },
-        ],
-      },
+      { name: "ccklos", link: "/home" },
     ],
   },
   {
-    name: "Women",
+    name: "About Us",
     submenu: true,
+    head: "aboutus",
     sublinks: [
-      {
-        Head: "women",
-        sublink: [
-          { name: "myamya", link: "/" },
-          { name: "hlahla", link: "/" },
-          { name: "mumu", link: "/" },
-          { name: "susu", link: "/" },
-        ],
-      },
-      {
-        Head: "women",
-        sublink: [
-          { name: "myamya", link: "/" },
-          { name: "hlahla", link: "/" },
-          { name: "mumu", link: "/" },
-          { name: "susu", link: "/" },
-        ],
-      },
-      {
-        Head: "women",
-        sublink: [
-          { name: "myamya", link: "/" },
-          { name: "hlahla", link: "/" },
-          { name: "mumu", link: "/" },
-          { name: "susu", link: "/" },
-        ],
-      },
-
-      {
-        Head: "women",
-        sublink: [
-          { name: "myamya", link: "/" },
-          { name: "hlahla", link: "/" },
-          { name: "mumu", link: "/" },
-          { name: "susu", link: "/" },
-        ],
-      },
-      {
-        Head: "women",
-        sublink: [
-          { name: "myamya", link: "/" },
-          { name: "hlahla", link: "/" },
-          { name: "mumu", link: "/" },
-          { name: "susu", link: "/" },
-        ],
-      },
+      { name: "ourmission", link: "/detail" },
+      { name: "ourvision", link: "/detail" },
+      { name: "partners", link: "/detail" },
+      { name: "sponsors", link: "/detail" },
+    ],
+  },
+  {
+    name: "Our Work",
+    submenu: true,
+    head: "ourwork",
+    sublinks: [
+      { name: "background", link: "/detail" },
+      { name: "ourapproach", link: "/detail" },
+      { name: "projectsites", link: "/detail" },
     ],
   },
 ];

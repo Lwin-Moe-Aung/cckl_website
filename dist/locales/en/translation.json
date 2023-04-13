@@ -6,21 +6,27 @@
     "login": "Login",
     "register": "Register",
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "community-voice": "Community Voice",
+    "resources": "Resources",
+    "get-involved": "Get Involved"
   },
   "welcome": {
-    "title": "Your story starts with us helloworld",
+    "title": "Complex Conservation In Kachin Landscape Open Society",
     "description": "This is a simple example of a Landing Page you can build using Material Tailwind. It features multiple components based on the Tailwind CSS and Material Design by Google."
   },
-  "men": {
-    "mgmg": "mgmg",
-    "aungaung": "aungaung",
-    "kyawkyaw": "kyawkyaw"
+  "home": {
+    "ccklos": "CCKL:OS - Complex Conservation Kachin Landscape: Open Society"
   },
-  "women": {
-    "myamya": "myamya",
-    "hlahla": "hlahla",
-    "mumu": "mumu",
-    "susu": "susu"
+  "aboutus": {
+    "ourmission": "Our Mission",
+    "ourvision": "Our Vision",
+    "partners": "Partners",
+    "sponsors": "Sponsors"
+  },
+  "ourwork": {
+    "background": "Background",
+    "ourapproach": "Our Approach",
+    "projectsites": "Project Sites"
   }
 }

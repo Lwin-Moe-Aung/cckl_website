@@ -19,24 +19,34 @@ const Navbar = () => {
             to="/home"
             className="flex items-center font-semibold text-sm  transition hover:text-blue-500"
           >
-            <img src={Logo} alt="logo" className="md:cursor-pointer h-9" />
+            <img src={Logo} alt="logo" className="md:cursor-pointer h-14" />
           </Link>
           <div className="text-3xl md:hidden" onClick={() => setOpen(!open)}>
             <ion-icon name={`${open ? "close" : "menu"}`}></ion-icon>
           </div>
         </div>
-        <ul className="md:flex hidden uppercase items-center gap-8 font-[Poppins]">
-          <li>
-            <Link to="/home" className="px-3 inline-block">
-              {t('nav.home')}
-            </Link>
-          </li>
+        <ul className="md:flex hidden items-center gap-1 font-[Poppins]">
+          <NavLinks />
           <li>
             <Link to="/blog" className="px-3 inline-block">
               {t('nav.blog')}
             </Link>
           </li>
-          <NavLinks />
+          <li>
+            <Link to="/" className="px-3 inline-block">
+              {t('nav.community-voice')}
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="px-3 inline-block">
+              {t('nav.resources')}
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="px-3 inline-block">
+              {t('nav.get-involved')}
+            </Link>
+          </li>
         </ul>
         <div className="md:block hidden">
           {auth ? (

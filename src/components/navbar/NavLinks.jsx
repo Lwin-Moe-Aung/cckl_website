@@ -21,7 +21,7 @@ const NavLinks = () => {
             >
               {link.name}
              
-              <span className="text-xl md:hidden inline">
+              {/* <span className="text-xl md:hidden inline">
                 <ion-icon
                   name={`${
                     heading === link.name ? "chevron-up" : "chevron-down"
@@ -30,7 +30,7 @@ const NavLinks = () => {
               </span>
               <span className="text-xl md:mt-1 md:ml-2  md:block hidden group-hover:rotate-180 group-hover:-mt-2">
                 <ion-icon name="chevron-down"></ion-icon>
-              </span>
+              </span> */}
             </h1>
             {link.submenu && (
               <div>
@@ -41,23 +41,16 @@ const NavLinks = () => {
                     mt-1 bg-white rotate-45"
                     ></div>
                   </div>
-                  <div className="bg-white p-5 grid grid-cols-3 gap-10">
-                    {link.sublinks.map((mysublinks, index) => (
-                      <div key={index}>
-                        <h1 className="text-lg font-semibold">
-                          {mysublinks.Head}
-                        </h1>
-                        {mysublinks.sublink.map((slink, index) => (
-                          <li className="text-sm text-gray-600 my-2.5" key={index}>
-                            <Link
-                              to={slink.link}
-                              className="hover:text-blue-500"
-                            >
-                              {t(`${mysublinks.Head}.${slink.name}`)}
-                            </Link>
-                          </li>
-                        ))}
-                      </div>
+                  <div className="bg-white p-5">
+                    {link.sublinks.map((slink, index) => (
+                      <li className="text-sm text-gray-600 my-2.5" key={index}>
+                        <Link
+                          to={slink.link}
+                          className="hover:text-blue-500"
+                        >
+                          {t(`${link.head}.${slink.name}`)}
+                        </Link>
+                      </li>
                     ))}
                   </div>
                 </div>
@@ -71,46 +64,14 @@ const NavLinks = () => {
           `}
           >
             {/* sublinks */}
-            {link.sublinks.map((slinks, index) => (
-              <div key={index}>
-                <div>
-                  <h1
-                    onClick={() =>
-                      subHeading !== slinks.Head
-                        ? setSubHeading(slinks.Head)
-                        : setSubHeading("")
-                    }
-                    className="py-3 pl-7 font-semibold md:pr-0 pr-5 flex justify-between items-center md:pr-0 pr-5"
-                  >
-                    {slinks.Head}
+              {link.sublinks.map((slink, index) => (
+                <li className="py-3 pl-14" key={index}>
+                  <Link to={slink.link}>
+                    {t(`${link.head}.${slink.name}`)}
 
-                    <span className="text-xl md:mt-1 md:ml-2 inline">
-                      <ion-icon
-                        name={`${
-                          subHeading === slinks.Head
-                            ? "chevron-up"
-                            : "chevron-down"
-                        }`}
-                      ></ion-icon>
-                    </span>
-                  </h1>
-                  <div
-                    className={`${
-                      subHeading === slinks.Head ? "md:hidden" : "hidden"
-                    }`}
-                  >
-                    {slinks.sublink.map((slink, index) => (
-                      <li className="py-3 pl-14" key={index}>
-                        <Link to={slink.link}>
-                          {t(`${slinks.Head}.${slink.name}`)}
-
-                        </Link>
-                      </li>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
+                  </Link>
+                </li>
+              ))}
           </div>
         </div>
       ))}

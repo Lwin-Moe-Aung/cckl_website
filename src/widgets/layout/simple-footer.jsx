@@ -16,7 +16,9 @@ export function SimpleFooter({ brandName, brandLink, routes }) {
             target="_blank"
             className="transition-colors hover:text-blue-500"
           >
-            {brandName}
+            {/* {brandName} */}
+            CCKLOS
+
           </a>{" "}
           for a better web.
         </Typography>

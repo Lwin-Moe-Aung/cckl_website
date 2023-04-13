@@ -79,9 +79,9 @@ export function Footer({ title, description, socials, menus, copyright }) {
 }
 
 Footer.defaultProps = {
-  title: "Material Tailwind",
+  title: "CCKLOS",
   description:
-    "Easy to use React components for Tailwind CSS and Material Design.",
+    "Complex Conservation In Kachin Landscape Open Society",
   socials: [
     {
       color: "blue",
@@ -99,19 +99,9 @@ Footer.defaultProps = {
       path: "https://www.instagram.com/creativetimofficial/",
     },
     {
-      color: "pink",
-      name: "dribbble",
-      path: "https://www.dribbble.com/creativetim",
-    },
-    {
       color: "red",
       name: "youtube",
       path: "https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w",
-    },
-    {
-      color: "black",
-      name: "github",
-      path: "https://github.com/creativetimofficial/material-tailwind",
     },
   ],
   menus: [
@@ -154,14 +144,14 @@ Footer.defaultProps = {
   ],
   copyright: (
     <>
-      Copyright © {year} Material Tailwind by{" "}
-      <a
+      Copyright © {year} CCKLOS{" "}
+      {/* <a
         href="https://www.creative-tim.com?ref=mtk"
         target="_blank"
         className="text-blue-gray-500 transition-colors hover:text-blue-500"
       >
         Creative Tim
-      </a>
+      </a> */}
       .
     </>
   ),
