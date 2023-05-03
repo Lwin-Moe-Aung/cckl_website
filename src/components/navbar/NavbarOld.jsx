@@ -6,10 +6,8 @@ import NavLinks from "./NavLinks";
 import {useTranslation} from 'react-i18next'
 import useAuth from "@/hooks/useAuth";
 import { Categories, ProfileDropDown, LanguageDropDown } from "../../widgets/cards";
-import { useNavData } from "@/context/NavdataContext";
 
 const Navbar = () => {
-  const navData = useNavData();
   const {t} = useTranslation()
   const { auth ,logout } = useAuth();
   const [open, setOpen] = useState(false);
@@ -21,7 +19,7 @@ const Navbar = () => {
             to="/home"
             className="flex items-center font-semibold text-sm  transition hover:text-blue-500"
           >
-            <img src={navData?.data?.logo.image} alt="logo" className="md:cursor-pointer h-14" />
+            <img src={Logo} alt="logo" className="md:cursor-pointer h-14" />
           </Link>
           <div className="text-3xl md:hidden" onClick={() => setOpen(!open)}>
             <ion-icon name={`${open ? "close" : "menu"}`}></ion-icon>
@@ -32,6 +30,21 @@ const Navbar = () => {
           <li>
             <Link to="/blog" className="px-3 inline-block">
               {t('nav.blog')}
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="px-3 inline-block">
+              {t('nav.community-voice')}
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="px-3 inline-block">
+              {t('nav.resources')}
+            </Link>
+          </li>
+          <li>
+            <Link to="/" className="px-3 inline-block">
+              {t('nav.get-involved')}
             </Link>
           </li>
         </ul>
@@ -80,7 +93,7 @@ const Navbar = () => {
                   <p className="text-gray-700 block px-4 text-sm" role="menuitem" >Signed in as</p>
                   <p className="py-3 px-3 inline-block" role="menuitem" tabIndex="-1" id="menu-item-0">{ auth?.user.email }</p>
                 </div>
-                <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src={auth?.user.photo || '/img/guest-user.png'} alt="sadf"/>
+                <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src={auth?.user.photo || 'img/guest-user.png'} alt="sadf"/>
               </div>
 
                 <li>

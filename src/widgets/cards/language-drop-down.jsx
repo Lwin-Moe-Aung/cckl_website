@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 import cookies from 'js-cookie'
+import { useNavDataE, useNavDataM } from '@/context/NavdataContext'
 
 const languages = [
     {
@@ -14,6 +15,8 @@ const languages = [
     },
 ]
 export const LanguageDropDown = () => {
+    const navDataE = useNavDataE();
+    const navDataM = useNavDataM();
     const currentLanguageCode = cookies.get('i18next') || 'mm'
     const currentLanguage = languages.find((l) => l.code === currentLanguageCode)
     const { t } = useTranslation()
@@ -24,8 +27,9 @@ export const LanguageDropDown = () => {
     }, [currentLanguage, t])
 
     const onChangeLang = (e) => {
-        console.log(e.target.value);
-        i18next.changeLanguage(e.target.value)
+        if(e.target.value == "en") navDataE()
+        else navDataM()
+        // i18next.changeLanguage(e.target.value)
     }
     return (
         <div className="px-3 inline-block">

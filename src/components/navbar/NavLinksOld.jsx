@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { links } from "./Mylinks";
 import {useTranslation} from 'react-i18next'
-import { useNavData } from "@/context/NavdataContext";
 
 const NavLinks = () => {
   const {t} = useTranslation()
   const [heading, setHeading] = useState("");
-  const navData = useNavData();
-
+  const [subHeading, setSubHeading] = useState("");
   return (
     <>
-      {navData?.data?.navbar.map((link, index) => (
+      {links.map((link, index) => (
         <div key={index}>
           <div className="py-7 px-3 text-left md:cursor-pointer group">
             <h1
               className="flex justify-between items-center md:pr-0 pr-5 group"
               onClick={() => {
-                heading !== link.title ? setHeading(link.title) : setHeading("");
-                // setSubHeading("");
+                heading !== link.name ? setHeading(link.name) : setHeading("");
+                setSubHeading("");
               }}
             >
-              {link.title}
+              {link.name}
              
               {/* <span className="text-xl md:hidden inline">
                 <ion-icon
@@ -34,7 +32,7 @@ const NavLinks = () => {
                 <ion-icon name="chevron-down"></ion-icon>
               </span> */}
             </h1>
-            {link.navbar_sub_menus && (
+            {link.submenu && (
               <div>
                 <div className="absolute top-20 hidden group-hover:md:block hover:md:block z-10">
                   <div className="py-3">
@@ -44,13 +42,13 @@ const NavLinks = () => {
                     ></div>
                   </div>
                   <div className="bg-white p-5">
-                    {link.navbar_sub_menus.map((slink, index) => (
+                    {link.sublinks.map((slink, index) => (
                       <li className="text-sm text-gray-600 my-2.5" key={index}>
                         <Link
-                          to={`detail?v=${slink.id}`}
+                          to={slink.link}
                           className="hover:text-blue-500"
                         >
-                          {slink.title}
+                          {t(`${link.head}.${slink.name}`)}
                         </Link>
                       </li>
                     ))}
@@ -62,16 +60,14 @@ const NavLinks = () => {
           {/* Mobile menus */}
           <div
             className={`
-            ${heading === link.title ? "md:hidden" : "hidden"}
+            ${heading === link.name ? "md:hidden" : "hidden"}
           `}
           >
             {/* sublinks */}
-              {link.navbar_sub_menus.map((slink, index) => (
+              {link.sublinks.map((slink, index) => (
                 <li className="py-3 pl-14" key={index}>
-                  <Link
-                    to={`detail?v=${slink.id}`}
-                   >
-                    {slink.title}
+                  <Link to={slink.link}>
+                    {t(`${link.head}.${slink.name}`)}
 
                   </Link>
                 </li>

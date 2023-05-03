@@ -16,7 +16,7 @@ export const ProfileDropDown = () => {
     return (
         <div className="px-3 inline-block">
             <div>
-                <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src={auth?.user.photo || 'img/guest-user.png'} alt="sadf" onClick={()=> setOpen(!open)}/>
+                <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src={auth?.user.photo || '/img/guest-user.png'} alt="sadf" onClick={()=> setOpen(!open)}/>
             </div>
             <div className={`${!open && 'hidden'} absolute right-0 z-10 mt-4 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                 <div className="py-1" role="none">

@@ -4,8 +4,7 @@ export * from "@/pages/sign-in";
 export * from "@/pages/sign-up";
 export * from "@/pages/post-detail";
 export * from "@/pages/blog";
-export * from "@/pages/mgmg";
-export * from "@/pages/home2";
+export * from "@/pages/sub-menu-detail";
 
 
 

@@ -121,7 +121,7 @@ export function Comment({
         <div className="comment">
             <div className="header">
                 <span className="mr-2 text-sm">
-                    <Avatar src={user.photo} alt="avatar" variant="circular" size="xs"/>
+                    <Avatar src={user.photo || '/img/guest-user.png'} alt="avatar" variant="circular" size="xs"/>
                     <span className="name">{user.username}</span>
                 </span>
                 <span className="date">

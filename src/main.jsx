@@ -17,6 +17,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import "../public/css/tailwind.css";
 import { AuthProvider } from "./context/AuthProvider";
+import { NavdataProvider } from "./context/NavdataContext";
+
 import   '../i18n'
 
 const loadingMarkup = (
@@ -29,9 +31,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <Suspense fallback={loadingMarkup}>
-            <App />
-          </Suspense>
+          <NavdataProvider>
+            <Suspense fallback={loadingMarkup}>
+              <App />
+            </Suspense>
+          </NavdataProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
