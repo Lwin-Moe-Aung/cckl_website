@@ -12,11 +12,26 @@ import {
 } from "@material-tailwind/react";
 import { PageTitle, Footer } from "@/widgets/layout";
 import { BlogPostCard, FeatureCard, TeamCard } from "@/widgets/cards";
-import { featuresData, teamData, contactData } from "@/data";
 import axios from '@/api/axios'
 import {useTranslation} from 'react-i18next'
 import { useNavData } from "@/context/NavdataContext";
 import EmailForm from "@/components/email-form/EmailForm";
+import {
+  StarIcon,
+  ArrowPathIcon,
+  FingerPrintIcon,
+  Battery0Icon,
+  BarsArrowUpIcon,
+  Bars4Icon,
+  Battery100Icon,
+  BellSlashIcon,
+  BellIcon,
+  BoltIcon,
+  BoltSlashIcon,
+  BookOpenIcon,
+  BuildingOffice2Icon,
+  CakeIcon
+} from "@heroicons/react/24/solid";
 
 export function Home() {
   const [posts, setPosts] = useState();
@@ -25,6 +40,23 @@ export function Home() {
   const {data} = useNavData();
   // const {loading, error, value: posts } = useAsync(getAllPosts);
   const getAllPostsUrl = "/admin/posts/all?page=0&size=4"
+
+  const iconMap = {
+    "StarIcon": StarIcon,
+    "ArrowPathIcon": ArrowPathIcon,
+    "FingerPrintIcon": FingerPrintIcon,
+    "Battery0Icon": Battery0Icon,
+    "BarsArrowUpIcon": BarsArrowUpIcon,
+    "Bars4Icon": Bars4Icon,
+    "Battery100Icon": Battery100Icon,
+    "BellSlashIcon": BellSlashIcon,
+    "BellIcon": BellIcon,
+    "BoltIcon": BoltIcon,
+    "BoltSlashIcon": BoltSlashIcon,
+    "BookOpenIcon": BookOpenIcon,
+    "BuildingOffice2Icon": BuildingOffice2Icon,
+    "CakeIcon": CakeIcon
+  }
 
   useEffect(() => {
     const getAllPosts = async () => {
@@ -65,12 +97,12 @@ export function Home() {
       <section className="-mt-32 bg-gray-50 px-4 pb-20 pt-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuresData.map(({ color, title, icon, description }) => (
+            {data?.feature.map(({ color, title, icon, description }) => (
               <FeatureCard
                 key={title}
                 color={color}
                 title={title}
-                icon={React.createElement(icon, {
+                icon={React.createElement( iconMap[icon], {
                   className: "w-5 h-5 text-white",
                 })}
                 description={description}
@@ -152,7 +184,8 @@ export function Home() {
       </section>
       <section className="relative bg-blue-gray-50/50 py-24 px-4">
         <div className="container mx-auto">
-          <iframe style={{ width:"100%", height:"400px" }} src="https://maps.google.com/maps?q=yangon%20shwedagon&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed">
+          <iframe style={{ width:"100%", height:"400px" }} 
+            src={data?.map.map}>
           </iframe>
         </div>
       </section>
