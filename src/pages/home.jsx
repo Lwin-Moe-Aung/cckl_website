@@ -185,7 +185,7 @@ export function Home() {
       <section className="relative bg-blue-gray-50/50 py-24 px-4">
         <div className="container mx-auto">
           <iframe style={{ width:"100%", height:"400px" }} 
-            src={data?.map.map}>
+            src={data?.map?.map}>
           </iframe>
         </div>
       </section>
