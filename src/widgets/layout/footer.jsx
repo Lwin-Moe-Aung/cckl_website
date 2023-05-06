@@ -46,6 +46,7 @@ export function Footer({ title, description, socials, menus, copyright }) {
                 <ul className="mt-3">
                     <li>
                       <Typography
+                        as="a"
                         href='/'
                         rel="noreferrer"
                         variant="small"
@@ -60,6 +61,7 @@ export function Footer({ title, description, socials, menus, copyright }) {
                 <ul className="mt-3">
                     <li>
                       <Typography
+                        as="a"
                         href='/blog'
                         rel="noreferrer"
                         variant="small"
@@ -114,9 +116,34 @@ Footer.defaultProps = {
       path: "https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w",
     },
   ],
+  menus: [
+    {
+      name: "useful links",
+      items: [
+        { name: "About Us", path: "https://www.creative-tim.com/presentation" },
+        { name: "Blog", path: "https://www.creative-tim.com/blog" },
+        {
+          name: "Github",
+          path: "https://www.github.com/creativetimofficial/material-tailwind?ref=mtk",
+        },
+        {
+          name: "Free Products",
+          path: "https://www.creative-tim.com/templates/free?ref=mtk",
+        },
+      ],
+    },
+  ],
   copyright: (
     <>
       Copyright © {year} CCKLOS{" "}
+      {/* <a
+        href="https://www.creative-tim.com?ref=mtk"
+        target="_blank"
+        className="text-blue-gray-500 transition-colors hover:text-blue-500"
+      >
+        Creative Tim
+      </a> */}
+      .
     </>
   ),
 };
