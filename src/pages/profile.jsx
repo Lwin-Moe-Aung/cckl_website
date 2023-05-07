@@ -34,7 +34,7 @@ export function Profile() {
                   </div>
                 </div>
                 <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
-                  <Button className="bg-blue-400">Edit Profile</Button>
+                  {/* <Button className="bg-blue-400">Edit Profile</Button> */}
                 </div>
                 <div className="w-full px-4 lg:order-1 lg:w-4/12">
                   
@@ -52,7 +52,7 @@ export function Profile() {
                 </div>
               </div>
 
-              <div className="mb-10 border-t border-blue-gray-50 py-6 text-center">
+              {/* <div className="mb-10 border-t border-blue-gray-50 py-6 text-center">
                 <div className="mt-2 flex flex-wrap justify-center">
                   <div className="flex w-full flex-col items-center px-4 lg:w-9/12">
                     <Typography className="mb-8 font-normal text-blue-gray-500">
@@ -65,7 +65,7 @@ export function Profile() {
                     <Button variant="text">Show more</Button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
