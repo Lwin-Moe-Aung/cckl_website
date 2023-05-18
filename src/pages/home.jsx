@@ -88,7 +88,7 @@ export function Home() {
                 color="white"
                 className="mb-6 font-black"
               >
-                { data?.banner.title }
+                { data?.banner?.title }
               </Typography>
             </div>
           </div>
@@ -97,7 +97,7 @@ export function Home() {
       <section className="-mt-32 bg-gray-50 px-4 pb-20 pt-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {data?.feature.map(({ color, title, icon, description }) => (
+            {data?.feature?.map(({ color, title, icon, description }) => (
               <FeatureCard
                 key={title}
                 color={color}
@@ -124,8 +124,8 @@ export function Home() {
       </section>
       <section className="px-4 pt-20 pb-48">
         <div className="container mx-auto">
-          <PageTitle heading={data?.heroesText.title} >
-              {data?.heroesText.description}
+          <PageTitle heading={data?.heroesText?.title} >
+              {data?.heroesText?.description}
           </PageTitle>
           {error && 
             <Alert
@@ -152,7 +152,7 @@ export function Home() {
           
           <div className="mt-24 grid grid-cols-1 gap-12 gap-x-24 md:grid-cols-2 xl:grid-cols-4">
 
-            {data?.heroesPeople.map(({id, image, name, job_title, fb_link }) => (
+            {data?.heroesPeople?.map(({id, image, name, job_title, fb_link }) => (
               <TeamCard
                 key={id}
                 img={image}
